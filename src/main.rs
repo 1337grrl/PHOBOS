@@ -5,16 +5,17 @@
 #![no_main]
 
 extern crate rlibc;
-
+mod vga_buffer;
 use core::panic::PanicInfo;
 
 // Panic handler function
 #[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
+fn panic(info: &PanicInfo) -> ! {
+	println!("{}", info);
 	loop {}
 }
 
-static HELLO: &[u8] = b"Well, hello there! This is Siljas Minimal Rust Kernel is speaking.";
+// static HELLO: &[u8] = b"Well, hello there! This is Deenas Minimal Rust Kernel is speaking.";
 
 // Disabling name mangling 
 #[no_mangle]
@@ -22,14 +23,11 @@ static HELLO: &[u8] = b"Well, hello there! This is Siljas Minimal Rust Kernel is
 //meaning it uses C's scheme for how subroutines receive parameters 
 //from their caller and how they return a result
 pub extern "C" fn _start() -> ! {
-	let vga_buffer = 0xb8000 as *mut u8;
+	use core::fmt::Write;
 	
-	for (i, &byte) in HELLO.iter().enumerate() {
-		unsafe {
-			*vga_buffer.offset(i as isize * 2) = byte;
-			*vga_buffer.offset(i as isize * 2 + 1) = 0xb;
-		}
-	}
+	println!("Well, hello there. There is a lot of magic happening here, and I'm really not sure that I understand a lot of it. Mostly the part about building macros seemed like high magic to me. But that's okay - this is me just beginning with all the OS stuff and with Rust and therefore I'm telling myself over and over again, that I do not have to understand all the magic right away. By the way: Telling me that is actually nearly as hard as trying to understand any magical details... Phew!");
+	
+	panic!("HAAAAALPH!");
 	
 	loop {}
 }
