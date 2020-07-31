@@ -3,11 +3,24 @@
 #![feature(custom_test_frameworks)]
 #![test_runner(crate::test_runner)]
 #![reexport_test_harness_main = "test_main"]
+#![feature(abi_x86_interrupt)]
+
 
 extern crate rlibc;
 use core::panic::PanicInfo;
 pub mod serial;
 pub mod vga_buffer;
+pub mod interrupts;
+
+
+///Entry point for 'cargo test'
+#[cfg(test)]
+#[no_mangle]
+pub extern "C" fn _start() -> ! {
+	init();
+	test_main();
+	loop {}
+}
 
 pub trait Testable {
 	 fn run(&self) -> ();
@@ -40,14 +53,6 @@ pub fn test_panic_handler(info: &PanicInfo) -> ! {
 	loop {} 
 }
 
-///Entry point for 'cargo test'
-#[cfg(test)]
-#[no_mangle]
-pub extern "C" fn _start() -> ! {
-	test_main();
-	loop {}
-}
-
 #[cfg(test)]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
@@ -68,4 +73,15 @@ pub fn exit_qemu(exit_code: QemuExitCode) {
 		let mut port = Port::new(0xf4);
 		port.write(exit_code as u32);
 	}
+}
+
+// Interrupt initioation
+pub fn init() {
+	interrupts::init_idt();
+}
+
+// Interrupt Breakpoint Exception test
+#[test_case]
+fn test_breakpoint_exception() {
+	x86_64::instructions::interrupts::int3();
 }

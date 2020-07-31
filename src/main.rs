@@ -15,16 +15,18 @@ use core::panic::PanicInfo;
 // By extern "C" we specify that _start is used by the calling convention of C, 
 //meaning it uses C's scheme for how subroutines receive parameters 
 //from their caller and how they return a result
-pub extern "C" fn _start() -> ! {
-	use core::fmt::Write;
-	
+pub extern "C" fn _start() -> ! {	
 	println!("Well, hello there. There is a lot of magic happening here, and I'm really not sure that I understand a lot of it. Mostly the part about building macros seemed like high magic to me. But that's okay - this is me just beginning with all the OS stuff and with Rust and therefore I'm telling myself over and over again, that I do not have to understand all the magic right away. By the way: Telling me that is actually nearly as hard as trying to understand any magical details... Phew!");
+
+    phobos::init();
 	
-	// panic!("HAAAAALPH!");
-	
+	// Invoking breakpoint exception
+	x86_64::instructions::interrupts::int3();
+
 	#[cfg(test)]
 	test_main();
 	
+	println!("Did not crash...yet...");
 	loop {}
 }
 

@@ -1,7 +1,7 @@
 cargo:rerun-if-changed=D:\dev\RUST\phobos\Cargo.toml
 cargo:rustc-link-search=native=D:\dev\RUST\phobos\target\bootimage\bootloader\x86_64-bootloader\release\build\bootloader-73bd58f4a8a4a9e8\out
-cargo:rustc-link-lib=static=kernel_bin-should_panic-0b874ead3190791f
+cargo:rustc-link-lib=static=kernel_bin-phobos-a1397fb06130f09f
 cargo:rerun-if-env-changed=KERNEL
 cargo:rerun-if-env-changed=KERNEL_MANIFEST
-cargo:rerun-if-changed=\\?\D:\dev\RUST\phobos\target\x86_64_phobos\debug\deps\should_panic-0b874ead3190791f
+cargo:rerun-if-changed=\\?\D:\dev\RUST\phobos\target\x86_64_phobos\debug\deps\phobos-a1397fb06130f09f
 cargo:rerun-if-changed=build.rs
