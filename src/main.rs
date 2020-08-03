@@ -21,7 +21,14 @@ pub extern "C" fn _start() -> ! {
     phobos::init();
 	
 	// Invoking breakpoint exception
-	x86_64::instructions::interrupts::int3();
+	// x86_64::instructions::interrupts::int3();
+	
+	// Triggering a page fault
+	/*unsafe {
+		*(0xdeadbeef as *mut u64) = 42;
+	};
+	*/
+
 
 	#[cfg(test)]
 	test_main();
