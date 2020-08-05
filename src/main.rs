@@ -34,14 +34,7 @@ pub extern "C" fn _start() -> ! {
 	test_main();
 	
 	println!("Did not crash...yet...");
-	loop {
-		/* Provokes a deadlock*/
-		use phobos::print;
-		for _ in 0..2147483647 {
-			print!("-");
-		}
-		
-	}
+	phobos::hlt_loop();
 }
 
 // Panic handler function
@@ -49,7 +42,7 @@ pub extern "C" fn _start() -> ! {
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
 	println!("{}", info);
-	loop {}
+	phobos::hlt_loop();
 }
 
 #[cfg(test)]
