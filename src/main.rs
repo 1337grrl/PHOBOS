@@ -19,16 +19,6 @@ pub extern "C" fn _start() -> ! {
 	println!("Well, hello there. There is a lot of magic happening here, and I'm really not sure that I understand a lot of it. Mostly the part about building macros seemed like high magic to me. But that's okay - this is me just beginning with all the OS stuff and with Rust and therefore I'm telling myself over and over again, that I do not have to understand all the magic right away. By the way: Telling me that is actually nearly as hard as trying to understand any magical details... Phew!");
 
     phobos::init();
-	
-	// Invoking breakpoint exception
-	// x86_64::instructions::interrupts::int3();
-	
-	// Triggering a page fault
-	/*unsafe {
-		*(0xdeadbeef as *mut u64) = 42;
-	};
-	*/
-
 
 	#[cfg(test)]
 	test_main();
